@@ -44,6 +44,15 @@ $ npm run start:dev
 # production mode
 $ npm run start:prod
 ```
+## Regras de Negócio
+
+
+- cancelCarWash
+	- Até 6h antes do horário do agendamento;
+  <br>
+- scheduleCarWash 
+	- Leva 40 minutos para lavar um carro (lava 3 ao mesmo tempo);
+	- Agenda até 3 dias antes (não pode 2 dias, não pode 1 dia);
 
 ## Test
 

@@ -16,7 +16,7 @@ import { jwtConstants } from './shared/constants';
             secret: jwtConstants.secret,
             signOptions: { expiresIn: '12h' },
         })
-    ],
+    ], 
     controllers: [
         AuthController,],
     providers: [

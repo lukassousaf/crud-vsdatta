@@ -1,7 +1,8 @@
-import { Body, Controller, Delete, Get, Param, Post, Put, UseGuards } from '@nestjs/common';
+import { Body, Controller, Delete, Get, HttpCode, HttpStatus, Param, Post, Put, Res, UseGuards } from '@nestjs/common';
 import { Schedule } from './shared/schedule';
 import { ScheduleService } from './shared/schedule.service';
 import { JwtAuthGuard } from '../auth/shared/jwt-auth.guard';
+import { Response } from 'express';
 
 
 @Controller('schedules')
@@ -37,5 +38,17 @@ export class SchedulesController {
     @Delete(':id')
     async delete(@Param('id') id: string) {
         this.scheduleService.delete(id);
+    }
+
+    @UseGuards(JwtAuthGuard)
+    @Delete('/cancel/:id')
+    async cancelSchedule(@Param('id') id: string, @Res() res: Response) {
+        const scheduleWasCancelled = await this.scheduleService.cancelSchedule(id);
+        if(scheduleWasCancelled) {
+            res.status(HttpStatus.OK).send({ response: 'Agendamento cancelado com sucesso' })
+        } else {
+            res.status(HttpStatus.UNPROCESSABLE_ENTITY).send({response: 'Só é possível cancelar o agendamento até 6 horas antes do serviço ser prestado.'})
+        }
+
     }
 }

@@ -1,7 +1,8 @@
-import { Body, Injectable, Post } from '@nestjs/common';
+import { Body, Injectable, NotFoundException, Post } from '@nestjs/common';
 import { Schedule } from './schedule';
-import { InjectModel } from '@nestjs/mongoose'
+import { InjectModel} from '@nestjs/mongoose'
 import { Model } from 'mongoose'
+import { addHours, subHours } from 'date-fns';
 
 @Injectable()
 export class ScheduleService {
@@ -30,6 +31,26 @@ export class ScheduleService {
         return await this.scheduleModel.deleteOne({ _id: id }).exec()
     }
 
+    async cancelSchedule(id: string) {
+        const schedule = await this.getById(id);
 
+        if(!schedule) {
+            throw new NotFoundException("Agendamento não encontrado");
+        }
+
+        const scheduleDate = new Date(schedule.scheduleDate);
+        const limitDate = subHours(scheduleDate, 6);
+        const currentDate = new Date()
+
+        console.log(limitDate, currentDate)
+
+        if(limitDate > currentDate) {
+            await this.delete(id);
+            return true;
+        } else {
+            return false;
+        }
+
+    }
 
 }

@@ -7,8 +7,7 @@ import { MongooseModule} from '@nestjs/mongoose'
 
 @Module({
     imports: [
-        MongooseModule.forFeature([{name:'Schedule', schema: ScheduleSchema}])
-    ],
+        MongooseModule.forFeature([{name:'Schedule', schema: ScheduleSchema}])],
     controllers: [SchedulesController],
     providers: [ScheduleService],
 })
