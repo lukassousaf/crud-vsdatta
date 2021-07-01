@@ -1,8 +1,8 @@
-import { Body, Controller, Delete, Get, HttpCode, HttpStatus, Param, Post, Put, Res, UseGuards } from '@nestjs/common';
+import { Body, Controller, Delete, Get, HttpCode, HttpStatus, Param, Post, Put, Query, Req, Res, UseGuards } from '@nestjs/common';
 import { Schedule } from './shared/schedule';
 import { ScheduleService } from './shared/schedule.service';
 import { JwtAuthGuard } from '../auth/shared/jwt-auth.guard';
-import { Response } from 'express';
+import { Response, Request } from 'express';
 
 
 @Controller('schedules')
@@ -17,7 +17,7 @@ export class SchedulesController {
     }
 
     @UseGuards(JwtAuthGuard)
-    @Get(':id')
+    @Get('get/:id')
     async getById(@Param('id') id: string) : Promise<Schedule> {
         return this.scheduleService.getById(id);
     }
@@ -29,7 +29,7 @@ export class SchedulesController {
     }
 
     @UseGuards(JwtAuthGuard)
-    @Put(':id')
+    @Put('update/:id')
     async update(@Param('id') id: string, @Body() schedule: Schedule) : Promise<Schedule> {
         return this.scheduleService.update(id, schedule)
     }
@@ -51,4 +51,8 @@ export class SchedulesController {
         }
 
     }
+
+    
+    
 }
+

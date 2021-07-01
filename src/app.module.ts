@@ -7,7 +7,7 @@ import { UsersModule } from './users/users.module';
 import { AuthModule } from './auth/auth.module';
 
 @Module({
-  imports: [MongooseModule.forRoot('mongodb+srv://root:root@cluster0.p4h4m.mongodb.net/myFirstDatabase?retryWrites=true&w=majority'), SchedulesModule, UsersModule, AuthModule],
+  imports: [MongooseModule.forRoot('mongodb+srv://<username>:<password>@cluster0.p4h4m.mongodb.net/myFirstDatabase?retryWrites=true&w=majority'), SchedulesModule, UsersModule, AuthModule],
   controllers: [AppController],
   providers: [AppService],
 })
